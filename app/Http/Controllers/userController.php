@@ -27,9 +27,12 @@ class userController extends Controller
          return redirect('/');
 
         }
-        else{//return 'fail';
+        else
+            {
+
+            //return 'fail';
             return response()->json(['msg'=>'fail'],'200');
-        }
+            }
         }
 
 
