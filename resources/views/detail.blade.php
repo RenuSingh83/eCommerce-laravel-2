@@ -50,7 +50,7 @@
 
 
  <div class='container'>
- <
+
     <div class='row'>
 <div class='col-sm-6'>
     <img src="{{ asset('/images/products/'.$details['gallery'] ) }}">
@@ -65,10 +65,11 @@
 
 <br/>
 <br/>
-<form action="/add_to_cart" method="POST">
-    @csrf
+<form action="/add_to_cart/{{ $details['id']  }}" method="POST">
+@csrf
 <input type="hidden" name="product_id" value="{{ $details['id']  }}">
-<button class="btn btn-success" >Add To Cart </button></form>
+<button class="btn btn-success" >Add To Cart </button>
+</form>
 <br/>
 <br/>
 <button class="btn btn-primary" > Buy Now</button>

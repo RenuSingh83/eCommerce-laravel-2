@@ -53,16 +53,15 @@ $total=ProductController::cartItem();
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Total items added Cart : {{ $cartItemCount }}</a> || <a href="#">Total items added Cart : {{ $total }}</a></li>
+          <li><a href="/cartDetail">Total items added Cart : {{ $cartItemCount }}</a> || <a href="#">Total items added Cart : {{ $total }}</a></li>
 
          @if(Session::has('user'))
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Session::get('user')['name'] }}<span class="caret"></span></a>
             <ul class="dropdown-menu">
-               <form action="/logout" method="POST">
-@csrf
+               {{-- <form action="/logout" method="POST"> @csrf
                 <li><button  type="submit">LogOut</button></li>
-               </form>
+               </form> --}}
                <li><a href="/logout1">LogOut link</a></li>
             <li><a href="#">Another action</a></li>
               <li><a href="#">Something else here</a></li>

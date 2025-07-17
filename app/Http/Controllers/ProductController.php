@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CartResource;
 use App\Models\cart;
 use App\Models\Product;
 
@@ -31,13 +32,13 @@ class ProductController extends Controller
     public function detail($id)
     {
 
-        $detail=Product::findorFail($id);
+       $detail=Product::findorFail($id);
        if($detail)
        {
 
         return view('detail',['details'=>$detail]);
 
-       // return $detail;
+     // return $detail;
 
        }
        else{
@@ -51,8 +52,12 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $SearchData=Product::where('category','like' , '%'.$request->input('query').'%')->get();
-        return   view('search',['searchData'=>$SearchData])  ;              $SearchData;
-
+        return   view('search',['searchData'=>$SearchData])  ;
+        // $SearchData;
+    }
+ public function addToCart1(Request $req)
+    {
+  return  'hi1';
     }
 
     public function addToCart(Request $req)
@@ -107,6 +112,14 @@ class ProductController extends Controller
 
     }
 
+public function GetCartProductdetail()
+{
+    $cartDetail=CartResource::collection(Cart::where('user_id','=',session()->get('user')['id'])->get());
+
+    return view('cartList',['cartDetails'=>$cartDetail->toArray(request())]);
+   // return $cartDetail;
+}
+
 
     public static function cartItem()
     {
@@ -114,18 +127,36 @@ class ProductController extends Controller
         $userd_id=session()->get('user')['id'];
         $items=cart::where('user_id','=',$userd_id)->get();
         return count($items);
-
-
         // return view('header',['counter'=>count($items)]);
 
+    }
+
+    public function removeFromCart($cid)
+    {
+             cart::destroy($cid);
+            $cartDetail=CartResource::collection(Cart::where('user_id','=',session()->get('user')['id'])->get());
+
+    return view('cartList',['cartDetails'=>$cartDetail->toArray(request())]);
     }
 
 public function logout123()
 {
 
   Session::forget('user');
-return redirect ('/');
+  return redirect ('/');
  //return 'hi';
+}
+
+public function BuyLaterItem($cartid)  // just doing softdelete
+{
+       $p= cart::findorFail($cartid);
+       if($p)
+       {
+        $p->delete();
+       }
+        $cartDetail=CartResource::collection(Cart::where('user_id','=',session()->get('user')['id'])->get());
+
+    return view('cartList',['cartDetails'=>$cartDetail->toArray(request())]);
 }
 
 }

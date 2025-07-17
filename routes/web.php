@@ -22,10 +22,13 @@ Route::get('/login', function(){
 
 });
 
+Route::post('/add_to_cart/{pid}',[ProductController::class ,'addToCart']);//->middleware('userAuth');
+Route::post('/removeItem/{pid}',[ProductController::class ,'removeFromCart']);//->middleware('userAuth');BuyLaterItem
+Route::post('/BuyLaterItem/{pid}',[ProductController::class ,'BuyLaterItem']);//->middleware('userAuth')
+Route::post('/logout',[ProductController::class ,'logout123']); //->middleware('userAuth');
 
 Route::post('/login',[userController::class ,'login']);
 Route::get('/',[ProductController::class ,'index']);//->middleware('userAuth');
 Route::get('detail/{id}',[ProductController::class ,'detail']);//->middleware('userAuth');
 Route::get('/search',[ProductController::class ,'search']);//->middleware('userAuth');
-Route::post('/add_to_cart/{pid}',[ProductController::class ,'addToCart']);//->middleware('userAuth');
-Route::post('/logout',[ProductController::class ,'logout123']); //->middleware('userAuth');
+Route::get('/cartDetail',[ProductController::class, 'GetCartProductdetail']);
